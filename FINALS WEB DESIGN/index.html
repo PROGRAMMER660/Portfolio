@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRND Steno Learning Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter and Caveat -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                            900: '#0a3751',
+                        },
+                        accent: {
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        hand: ['Caveat', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- External CSS Link -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex flex-col justify-between text-slate-800 antialiased">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- Logo & Name -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-teal-400 flex items-center justify-center text-white shadow-md">
+                        <i class="fa-solid fa-feather-pointed text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg leading-tight text-slate-900 block">GRND Steno</span>
+                        <span class="text-xs text-brand-600 font-semibold tracking-wider uppercase block">Learning Hub</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-6 items-center">
+                    <button onclick="navigateTo('home')" id="nav-home" class="tab-btn active px-3 py-5 text-sm text-slate-600 hover:text-brand-600 transition">
+                        <i class="fa-solid fa-house mr-1.5"></i> Home
+                    </button>
+                    <button onclick="navigateTo('lessons')" id="nav-lessons" class="tab-btn px-3 py-5 text-sm text-slate-600 hover:text-brand-600 transition">
+                        <i class="fa-solid fa-book-open mr-1.5"></i> Lessons & Core
+                    </button>
+                    <button onclick="navigateTo('practice')" id="nav-practice" class="tab-btn px-3 py-5 text-sm text-slate-600 hover:text-brand-600 transition">
+                        <i class="fa-solid fa-pen-nib mr-1.5"></i> Practice Zone
+                    </button>
+                    <button onclick="navigateTo('tips')" id="nav-tips" class="tab-btn px-3 py-5 text-sm text-slate-600 hover:text-brand-600 transition">
+                        <i class="fa-solid fa-lightbulb mr-1.5"></i> Tips & Guidance
+                    </button>
+                    <button onclick="navigateTo('about')" id="nav-about" class="tab-btn px-3 py-5 text-sm text-slate-600 hover:text-brand-600 transition">
+                        <i class="fa-solid fa-users mr-1.5"></i> About Us
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="navigateTo('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600 font-medium">
+                <i class="fa-solid fa-house w-6"></i> Home
+            </button>
+            <button onclick="navigateTo('lessons'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600 font-medium">
+                <i class="fa-solid fa-book-open w-6"></i> Lessons & Core
+            </button>
+            <button onclick="navigateTo('practice'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600 font-medium">
+                <i class="fa-solid fa-pen-nib w-6"></i> Practice Zone
+            </button>
+            <button onclick="navigateTo('tips'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600 font-medium">
+                <i class="fa-solid fa-lightbulb w-6"></i> Tips & Guidance
+            </button>
+            <button onclick="navigateTo('about'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600 font-medium">
+                <i class="fa-solid fa-users w-6"></i> About Us
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= PAGE 1: HOME PAGE ================= -->
+        <section id="section-home" class="section-view space-y-12">
+            <div class="relative bg-gradient-to-r from-brand-900 via-brand-800 to-slate-900 rounded-3xl overflow-hidden shadow-2xl text-white p-8 sm:p-12 lg:p-16">
+                <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-3xl space-y-6">
+                    <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-brand-500/20 text-brand-200 border border-brand-400/30">
+                        <i class="fa-solid fa-graduation-cap mr-2"></i> Designed for PASOA Students & Beginners
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                        Master Gregg Shorthand with Confidence
+                    </h1>
+                    <p class="text-brand-100 text-lg sm:text-xl font-light leading-relaxed">
+                        <strong class="font-semibold text-white">Steno Learning Hub: Your Steno Journey Starts Here!</strong><br>
+                        Simplify your shorthand learning experience. Master strokes, build speed, and achieve writing endurance with step-by-step guidance.
+                    </p>
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <button onclick="navigateTo('lessons')" class="px-7 py-3.5 bg-brand-500 hover:bg-brand-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-brand-500/25 transition transform active:scale-95 flex items-center">
+                            <i class="fa-solid fa-play-circle mr-2 text-lg"></i> Start Learning
+                        </button>
+                        <button onclick="navigateTo('practice')" class="px-7 py-3.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold rounded-xl backdrop-blur-md transition transform active:scale-95 flex items-center">
+                            <i class="fa-solid fa-pencil mr-2 text-lg"></i> Practice Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Introduction Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center text-brand-600 text-xl font-bold mb-4">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Why Gregg Shorthand?</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Gregg Shorthand is a phonetic writing system[cite: 1] that enables users to write at the speed of speech. It replaces long words with smooth, continuous strokes based on natural handwriting motions.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600 text-xl font-bold mb-4">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Tailored for PASOA</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Specifically designed for Executive Assistant and Office Administration students. Build the required speed, dictation accuracy, and transcription fluency needed in professional careers.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 text-xl font-bold mb-4">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">6 Chapters Curriculum</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Structured across 6 comprehensive chapters and 30 step-by-step lessons to take you from foundational strokes to advanced professional dictation.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2: LESSONS & CORE (6 CHAPTERS x 5 LESSONS = 30 LESSONS) ================= -->
+        <section id="section-lessons" class="section-view hidden space-y-12">
+            <div class="border-b border-slate-200 pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Lessons & Core Curriculum</h2>
+                    <p class="text-slate-600 text-sm mt-1">Explore our 6 structured chapters comprising 30 comprehensive shorthand lessons.</p>
+                </div>
+                <a href="lesson1.html" target="_blank" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition flex items-center shadow-sm">
+                    <i class="fa-solid fa-book-bookmark mr-2"></i> View Chapter 1 Manual Scans
+                </a>
+            </div>
+
+            <!-- CHAPTER 1 -->
+            <div class="space-y-6">
+                <div class="flex items-center space-x-3 border-l-4 border-brand-600 pl-4">
+                    <h3 class="text-xl font-extrabold text-slate-900">Chapter 1: Fundamentals & Basic Consonants</h3>
+                    <span class="text-xs bg-brand-50 text-brand-700 px-3 py-1 rounded-full font-semibold">5 Lessons</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 1</span>
+                            <h4 class="text-lg font-bold text-slate-900">Introduction & Group A Consonants (S, Z)</h4>
+                            <p class="text-slate-600 text-sm">Learning the tiny downward curve resembling a comma and silent letter rules.</p>
+                        </div>
+                        <a href="chapter 1/lesson1.html" target="_self" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group">
+                            <span>Start Lesson 1</span><i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 2</span>
+                            <h4 class="text-lg font-bold text-slate-900">Circle Vowels (A and E)</h4>
+                            <p class="text-slate-600 text-sm">Mastering large circles for A and tiny circles for E with bidirectional writing flow.</p>
+                        </div>
+                        <a href="chapter 1/lesson2.html" target="_self" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group">
+                            <span>Start Lesson 2</span><i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 1.3</span>
+                            <h4 class="text-lg font-bold text-slate-900">Downward Curves (F and V)</h4>
+                            <p class="text-slate-600 text-sm">Proportional stroke lengths for medium F and full-space V curves.</p>
+                        </div>
+                        <a href="chapter 1/lesson3.html" target="_self" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group">
+                            <span>Start Lesson 3</span><i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 4</span>
+                            <h4 class="text-lg font-bold text-slate-900">Forward Straights (N and M)</h4>
+                            <p class="text-slate-600 text-sm">Short horizontal straight lines for N and longer horizontal lines for M.</p>
+                        </div>
+                        <a href="chapter 1/lesson4.html" target="_self" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group">
+                            <span>Start Lesson 4</span><i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 5</span>
+                            <h4 class="text-lg font-bold text-slate-900">Upward Straights (T and D) & Reading</h4>
+                            <p class="text-slate-600 text-sm">Short upward straight T lines, longer upward D lines, punctuation, and chapter reading practice.</p>
+                        </div>
+                        <a href="chapter 1/lesson5.html" target="_blank" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group">
+                            <span>Start Lesson 5</span><i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAPTER 2 -->
+            <div class="space-y-6 pt-4">
+                <div class="flex items-center space-x-3 border-l-4 border-brand-600 pl-4">
+                    <h3 class="text-xl font-extrabold text-slate-900">Chapter 2: Advanced Curves & Vowel Combinations</h3>
+                    <span class="text-xs bg-brand-50 text-brand-700 px-3 py-1 rounded-full font-semibold">5 Lessons</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 6</span><h4 class="text-lg font-bold text-slate-900">The O Vowel & Hook Combinations</h4><p class="text-slate-600 text-sm">Writing the O hook and combining it smoothly with preceding consonant strokes.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 6</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 7</span><h4 class="text-lg font-bold text-slate-900">The OO, U, and W Vowel Series</h4><p class="text-slate-600 text-sm">Deepening vowel accuracy and mastering deep hook angles.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 7</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 8</span><h4 class="text-lg font-bold text-slate-900">Expressing R and L Consonant Curves</h4><p class="text-slate-600 text-sm">Gentle upward curves representing R and L with proper slope angles.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 8</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 9</span><h4 class="text-lg font-bold text-slate-900">Shallow Forward Curves (K and G)</h4><p class="text-slate-600 text-sm">Practicing shallow horizontal curves for high-frequency K and G sounds.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 9</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 10</span><h4 class="text-lg font-bold text-slate-900">Chapter 2 Review & Dictation Drills</h4><p class="text-slate-600 text-sm">Consolidating curves and short words into timed reading exercises.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 10</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAPTER 3 -->
+            <div class="space-y-6 pt-4">
+                <div class="flex items-center space-x-3 border-l-4 border-brand-600 pl-4">
+                    <h3 class="text-xl font-extrabold text-slate-900">Chapter 3: Blends & Continuous Motion</h3>
+                    <span class="text-xs bg-brand-50 text-brand-700 px-3 py-1 rounded-full font-semibold">5 Lessons</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 11</span><h4 class="text-lg font-bold text-slate-900">Consonant Blends (PR and PL)</h4><p class="text-slate-600 text-sm">Joining consonant strokes seamlessly without lifting the pen.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 11</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 12</span><h4 class="text-lg font-bold text-slate-900">Consonant Blends (TR and DR)</h4><p class="text-slate-600 text-sm">Mastering sharp upward and downward slant transitions.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 12</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 13</span><h4 class="text-lg font-bold text-slate-900">Consonant Blends (BR and BL)</h4><p class="text-slate-600 text-sm">Building fluid reflex motion for frequent office terminology.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 13</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 14</span><h4 class="text-lg font-bold text-slate-900">Ending Blends (MP and NT)</h4><p class="text-slate-600 text-sm">Abbreviating common word endings for rapid transcription speed.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 14</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 15</span><h4 class="text-lg font-bold text-slate-900">Chapter 3 Speed & Fluency Drills</h4><p class="text-slate-600 text-sm">Timed transcription practice focusing on unhesitating blend execution.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 15</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAPTER 4 -->
+            <div class="space-y-6 pt-4">
+                <div class="flex items-center space-x-3 border-l-4 border-brand-600 pl-4">
+                    <h3 class="text-xl font-extrabold text-slate-900">Chapter 4: Brief Forms & High-Frequency Words</h3>
+                    <span class="text-xs bg-brand-50 text-brand-700 px-3 py-1 rounded-full font-semibold">5 Lessons</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 16</span><h4 class="text-lg font-bold text-slate-900">Essential Pronouns & Articles</h4><p class="text-slate-600 text-sm">Brief forms for I, you, he, she, the, and a.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 16</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 17</span><h4 class="text-lg font-bold text-slate-900">Common Business Verbs</h4><p class="text-slate-600 text-sm">Shortcuts for can, will, would, should, and have.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 17</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 18</span><h4 class="text-lg font-bold text-slate-900">Prepositions and Conjunctions</h4><p class="text-slate-600 text-sm">Brief outlines for of, to, in, for, and, and but.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 18</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 19</span><h4 class="text-lg font-bold text-slate-900">Office & Correspondence Shortcuts</h4><p class="text-slate-600 text-sm">Brief forms for business, dear, truly, and sincerely.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 19</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 20</span><h4 class="text-lg font-bold text-slate-900">Brief Form Mastery Test</h4><p class="text-slate-600 text-sm">Speed vocabulary drills to ensure instant recall of all core brief forms.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 20</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAPTER 5 -->
+            <div class="space-y-6 pt-4">
+                <div class="flex items-center space-x-3 border-l-4 border-brand-600 pl-4">
+                    <h3 class="text-xl font-extrabold text-slate-900">Chapter 5: Phrasography & Advanced Joining</h3>
+                    <span class="text-xs bg-brand-50 text-brand-700 px-3 py-1 rounded-full font-semibold">5 Lessons</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 21</span><h4 class="text-lg font-bold text-slate-900">Introduction to Phrase Building</h4><p class="text-slate-600 text-sm">The principles of connecting multiple words into continuous motion.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 21</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 22</span><h4 class="text-lg font-bold text-slate-900">Pronoun & Verb Phrases</h4><p class="text-slate-600 text-sm">Joining I will, you should, we have, and they can.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 22</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 23</span><h4 class="text-lg font-bold text-slate-900">Prepositional Phrase Clusters</h4><p class="text-slate-600 text-sm">Connecting to the, in the, of the, and for you.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 23</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 24</span><h4 class="text-lg font-bold text-slate-900">Negative & Interrogative Phrases</h4><p class="text-slate-600 text-sm">Writing do not, cannot, will not, and have not efficiently.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 24</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 25</span><h4 class="text-lg font-bold text-slate-900">Advanced Phrasography Drills</h4><p class="text-slate-600 text-sm">Combining multi-word business idioms into seamless outlines.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 25</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAPTER 6 -->
+            <div class="space-y-6 pt-4">
+                <div class="flex items-center space-x-3 border-l-4 border-brand-600 pl-4">
+                    <h3 class="text-xl font-extrabold text-slate-900">Chapter 6: Professional Dictation & Speed Building</h3>
+                    <span class="text-xs bg-brand-50 text-brand-700 px-3 py-1 rounded-full font-semibold">5 Lessons</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 26</span><h4 class="text-lg font-bold text-slate-900">Executive Correspondence Setup</h4><p class="text-slate-600 text-sm">Formatting business letters, dates, and salutations in shorthand.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 26</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 27</span><h4 class="text-lg font-bold text-slate-900">Legal & Administrative Vocabulary</h4><p class="text-slate-600 text-sm">Handling specialized terminology and rapid abbreviation shortcuts.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 27</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 28</span><h4 class="text-lg font-bold text-slate-900">60 WPM Dictation Endurance</h4><p class="text-slate-600 text-sm">Sustained speed building exercises using the Audio Dictation Studio.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 28</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 29</span><h4 class="text-lg font-bold text-slate-900">Transcription Accuracy Drills</h4><p class="text-slate-600 text-sm">Translating high-speed shorthand notes back into longhand text.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 29</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-3"><span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full uppercase">Lesson 30</span><h4 class="text-lg font-bold text-slate-900">PASOA Certification Final Test</h4><p class="text-slate-600 text-sm">Comprehensive speed and accuracy examination for executive stenography.</p></div>
+                        <a href="#" onclick="event.preventDefault();" class="inline-flex items-center justify-between w-full px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold transition group"><span>Start Lesson 30</span><i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= PAGE 3: PRACTICE ZONE ================= -->
+        <section id="section-practice" class="section-view hidden space-y-10">
+            <div class="border-b border-slate-200 pb-5">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Practice Zone</h2>
+                <p class="text-slate-600 text-sm mt-1">Interactive drawing pad, typing speed builder, and audio dictation studio.</p>
+            </div>
+
+            <!-- Practice Navigation Tabs -->
+            <div class="flex border-b border-slate-200 space-x-6 overflow-x-auto">
+                <button onclick="switchPracticeTab('writing')" id="ptab-writing" class="pb-3 text-sm font-semibold text-brand-600 border-b-2 border-brand-600 whitespace-nowrap">
+                    <i class="fa-solid fa-pen-line mr-2"></i> Interactive Drawing Pad
+                </button>
+                <button onclick="switchPracticeTab('speed')" id="ptab-speed" class="pb-3 text-sm font-semibold text-slate-500 hover:text-brand-600 border-b-2 border-transparent whitespace-nowrap">
+                    <i class="fa-solid fa-keyboard mr-2"></i> Passage Typing Test
+                </button>
+                <button onclick="switchPracticeTab('dictation')" id="ptab-dictation" class="pb-3 text-sm font-semibold text-slate-500 hover:text-brand-600 border-b-2 border-transparent whitespace-nowrap">
+                    <i class="fa-solid fa-microphone-lines mr-2"></i> Audio Dictation Studio
+                </button>
+            </div>
+
+            <!-- TAB 1: INTERACTIVE DRAWING PAD -->
+            <div id="pzone-writing" class="space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center">
+                            <i class="fa-solid fa-shapes text-brand-600 mr-2"></i> Select Practice Target
+                        </h3>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-2">Target Stroke / Word</label>
+                            <select id="canvas-target-select" onchange="updateCanvasTarget()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500">
+                                <option value="K">Letter K (Shallow forward curve)</option>
+                                <option value="S">Letter S (Comma curve)</option>
+                                <option value="F">Letter F (Medium curve)</option>
+                                <option value="V">Letter V (Large curve)</option>
+                                <option value="N">Letter N (Short horizontal line)</option>
+                                <option value="M">Letter M (Long horizontal line)</option>
+                                <option value="A">Vowel A (Large circle)</option>
+                                <option value="E">Vowel E (Tiny circle)</option>
+                            </select>
+                        </div>
+                        <div class="bg-brand-50/60 rounded-xl p-4 border border-brand-100 text-center">
+                            <span class="text-xs font-semibold text-brand-700 uppercase">Target Guide</span>
+                            <div class="h-24 flex items-center justify-center my-2" id="canvas-guide-svg"></div>
+                            <p class="text-xs text-slate-600" id="canvas-guide-desc">Practice smooth motion.</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 mb-1">Pen Color</label>
+                                <div class="flex gap-2">
+                                    <button onclick="setPenColor('#0284c7')" class="w-8 h-8 rounded-full bg-sky-600 border-2 border-white shadow hover:scale-110 transition"></button>
+                                    <button onclick="setPenColor('#1e293b')" class="w-8 h-8 rounded-full bg-slate-800 border-2 border-white shadow hover:scale-110 transition"></button>
+                                    <button onclick="setPenColor('#dc2626')" class="w-8 h-8 rounded-full bg-red-600 border-2 border-white shadow hover:scale-110 transition"></button>
+                                    <button onclick="setPenColor('#059669')" class="w-8 h-8 rounded-full bg-emerald-600 border-2 border-white shadow hover:scale-110 transition"></button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 mb-1">Pen Thickness</label>
+                                <input type="range" id="pen-size" min="2" max="10" value="4" class="w-full accent-brand-600">
+                            </div>
+                            <div class="flex gap-2 pt-2">
+                                <button onclick="clearCanvas()" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
+                                    <i class="fa-solid fa-eraser mr-1"></i> Clear Pad
+                                </button>
+                                <button onclick="downloadCanvas()" class="px-4 py-2.5 bg-brand-50 hover:bg-brand-100 text-brand-700 font-semibold text-xs rounded-xl transition">
+                                    <i class="fa-solid fa-download mr-1"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-semibold text-slate-500">Draw shorthand strokes inside the ruled steno pad area:</span>
+                            <span class="text-xs bg-slate-100 px-2.5 py-1 rounded-full text-slate-600">Touch & Mouse Enabled</span>
+                        </div>
+                        <div class="relative flex-1 min-h-[350px] bg-white rounded-xl border border-slate-300 steno-line-bg overflow-hidden shadow-inner cursor-crosshair">
+                            <canvas id="steno-canvas" class="w-full h-full block"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: PASSAGE TYPING TEST -->
+            <div id="pzone-speed" class="hidden space-y-6">
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Passage Completion & Speed Test</h3>
+                            <p class="text-xs text-slate-500">Type the passage below completely to complete your test and calculate final speed & accuracy.</p>
+                        </div>
+                        <div class="flex items-center space-x-4 bg-slate-50 px-4 py-2 rounded-xl border border-slate-200">
+                            <div class="text-center">
+                                <span class="block text-xs text-slate-400 font-semibold">SPEED</span>
+                                <span id="speed-wpm" class="text-lg font-bold text-emerald-600 font-mono">0 WPM</span>
+                            </div>
+                            <div class="h-8 w-px bg-slate-200"></div>
+                            <div class="text-center">
+                                <span class="block text-xs text-slate-400 font-semibold">ACCURACY</span>
+                                <span id="speed-accuracy" class="text-lg font-bold text-purple-600 font-mono">100%</span>
+                            </div>
+                            <div class="h-8 w-px bg-slate-200"></div>
+                            <div class="text-center">
+                                <span class="block text-xs text-slate-400 font-semibold">MISTAKES</span>
+                                <span id="speed-mistakes" class="text-lg font-bold text-red-600 font-mono">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Type This Passage:</span>
+                            <button onclick="loadNewQuote()" class="text-xs text-brand-600 hover:text-brand-700 font-semibold flex items-center gap-1 transition">
+                                <i class="fa-solid fa-arrows-rotate"></i> Change Passage
+                            </button>
+                        </div>
+                        <p id="speed-prompt-text" class="text-lg font-medium text-slate-800 leading-relaxed font-sans">Business letters should be written clearly and concisely with proper steno form adherence.</p>
+                    </div>
+
+                    <div>
+                        <textarea id="speed-input" rows="4" placeholder="Start typing the passage here to begin test..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+                    </div>
+
+                    <div class="flex flex-wrap justify-between items-center gap-4">
+                        <div class="flex gap-2">
+                            <button onclick="resetSpeedTrainer()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs transition flex items-center">
+                                <i class="fa-solid fa-rotate-right mr-1.5"></i> Restart Current Passage
+                            </button>
+                            <button onclick="loadNewQuote()" class="px-5 py-2.5 bg-brand-50 hover:bg-brand-100 text-brand-700 font-semibold rounded-xl text-xs transition flex items-center">
+                                <i class="fa-solid fa-forward mr-1.5"></i> Load New Passage
+                            </button>
+                        </div>
+                        <span id="speed-status-msg" class="text-xs font-semibold text-brand-600">Type the complete passage to calculate final results.</span>
+                    </div>
+
+                    <!-- RESULTS MODAL -->
+                    <div id="typing-results-modal" class="hidden bg-gradient-to-br from-slate-900 to-brand-950 p-6 sm:p-8 rounded-2xl text-white space-y-6 shadow-2xl border border-brand-500/30">
+                        <div class="flex items-center justify-between border-b border-slate-700/60 pb-4">
+                            <h4 class="text-xl font-extrabold flex items-center text-emerald-400">
+                                <i class="fa-solid fa-trophy mr-2.5 text-amber-400"></i> Typing Test Complete!
+                            </h4>
+                            <span class="text-xs bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-full font-semibold">Passed</span>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                            <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700/60">
+                                <span class="text-xs text-slate-400 block font-semibold mb-1">FINAL SPEED</span>
+                                <span id="res-wpm" class="text-2xl font-black text-brand-400 font-mono">0 WPM</span>
+                            </div>
+                            <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700/60">
+                                <span class="text-xs text-slate-400 block font-semibold mb-1">ACCURACY</span>
+                                <span id="res-accuracy" class="text-2xl font-black text-emerald-400 font-mono">100%</span>
+                            </div>
+                            <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700/60">
+                                <span class="text-xs text-slate-400 block font-semibold mb-1">MISTAKES</span>
+                                <span id="res-mistakes" class="text-2xl font-black text-red-400 font-mono">0</span>
+                            </div>
+                            <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700/60">
+                                <span class="text-xs text-slate-400 block font-semibold mb-1">TIME TAKEN</span>
+                                <span id="res-time" class="text-2xl font-black text-purple-400 font-mono">0s</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap justify-end gap-3 pt-2">
+                            <button onclick="resetSpeedTrainer()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold transition">
+                                <i class="fa-solid fa-rotate-right mr-1.5"></i> Retry Same Passage
+                            </button>
+                            <button onclick="loadNewQuote()" class="px-6 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition shadow-md">
+                                <i class="fa-solid fa-circle-play mr-1.5"></i> Next Passage (New Round)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: AUDIO DICTATION STUDIO -->
+            <div id="pzone-dictation" class="hidden space-y-6">
+                <div class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="border-b border-slate-100 pb-4">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center">
+                            <i class="fa-solid fa-microphone-lines text-brand-600 mr-2"></i> Custom Audio Dictation Studio
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">Paste any essay or passage below, select a slower starting speed (down to 20 WPM), and let your browser dictate comfortably.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Paste Essay / Passage to Dictate</label>
+                            <textarea id="tts-user-text" rows="5" placeholder="Paste your practice essay or business correspondence here..." class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">Dear Mr. Johnson, we are pleased to confirm your appointment regarding the upcoming executive stenography seminar scheduled for next Monday morning. Please ensure your notes and writing pads are ready.</textarea>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center bg-brand-50/50 p-4 rounded-xl border border-brand-100">
+                            <div>
+                                <label class="block text-xs font-bold text-brand-800 uppercase mb-1">Target Speed (WPM): <span id="tts-wpm-label" class="text-brand-600 font-extrabold text-base">40</span> WPM</label>
+                                <select id="tts-wpm-select" onchange="updateTTSWPM()" class="w-full bg-white border border-brand-200 rounded-xl p-2.5 text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500">
+                                    <option value="20">20 WPM (Ultra slow / beginner writing)</option>
+                                    <option value="30">30 WPM (Slow pace)</option>
+                                    <option value="40" selected>40 WPM (Comfortable slow practice)</option>
+                                    <option value="50">50 WPM</option>
+                                    <option value="60">60 WPM (Standard practice)</option>
+                                    <option value="80">80 WPM</option>
+                                    <option value="100">100 WPM</option>
+                                    <option value="120">120 WPM (Advanced)</option>
+                                </select>
+                            </div>
+                            <div class="flex items-end justify-end gap-2">
+                                <button onclick="startTTSDictation()" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-bold shadow-md transition flex items-center">
+                                    <i class="fa-solid fa-play mr-2"></i> Start Dictation
+                                </button>
+                                <button onclick="stopTTSDictation()" class="px-4 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-sm font-bold transition flex items-center">
+                                    <i class="fa-solid fa-stop mr-2"></i> Stop
+                                </button>
+                            </div>
+                        </div>
+                        <div id="tts-status-box" class="hidden p-4 rounded-xl text-center text-sm font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 animate-pulse">
+                            <i class="fa-solid fa-volume-high mr-2"></i> Dictating in progress... Keep your pen moving!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 4: TIPS & GUIDANCE ================= -->
+        <section id="section-tips" class="section-view hidden space-y-8">
+            <div class="border-b border-slate-200 pb-5">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Tips & Guidance</h2>
+                <p class="text-slate-600 text-sm mt-1">Recommended supplies, practice routines, and common mistakes to avoid in Gregg Shorthand.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center"><i class="fa-solid fa-pen text-brand-600 mr-2.5"></i> Recommended Supplies</h3>
+                    <ul class="space-y-4 text-sm text-slate-600">
+                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-emerald-500 mt-1 mr-3 flex-shrink-0"></i><div><strong class="text-slate-900">Pens:</strong> Fine-point fountain pens or smooth gel pens (0.5mm).</div></li>
+                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-emerald-500 mt-1 mr-3 flex-shrink-0"></i><div><strong class="text-slate-900">Notebooks:</strong> Steno notebooks with vertical center lines and green-tinted paper.</div></li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center"><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-2.5"></i> Common Mistakes to Avoid</h3>
+                    <ul class="space-y-4 text-sm text-slate-600">
+                        <li class="flex items-start"><i class="fa-solid fa-circle-xmark text-red-500 mt-1 mr-3 flex-shrink-0"></i><div><strong class="text-slate-900">Drawing Strokes:</strong> Avoid slow, deliberate drawing. Shorthand relies on continuous cursive motion.</div></li>
+                        <li class="flex items-start"><i class="fa-solid fa-circle-xmark text-red-500 mt-1 mr-3 flex-shrink-0"></i><div><strong class="text-slate-900">Incorrect Proportions:</strong> Failing to distinguish between small (S), medium (F), and large (V) curves.</div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 5: ABOUT US ================= -->
+        <section id="section-about" class="section-view hidden space-y-8">
+            <div class="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-2xl border border-slate-200 shadow-sm space-y-8">
+                <div class="text-center space-y-3">
+                    <div class="w-16 h-16 bg-brand-100 text-brand-600 rounded-2xl mx-auto flex items-center justify-center text-3xl font-bold shadow-md">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">About GRND Steno Learning Hub</h2>
+                    <p class="text-slate-600 text-sm">Created to support PASOA students and shorthand beginners.</p>
+                </div>
+                <div class="space-y-4 text-sm text-slate-600 leading-relaxed">
+                    <p>The <strong>GRND Steno Learning Hub</strong> was built to provide an intuitive digital training platform for students learning Gregg Shorthand.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-500 text-xs">
+            <p>&copy; 2026 GRND Steno Learning Hub. Designed for PASOA Students & Beginners.</p>
+        </div>
+    </footer>
+
+    <!-- External JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
